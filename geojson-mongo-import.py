@@ -55,6 +55,10 @@ for feature in geojson['features']:
   # Note: comment out next two lines if input file does not contain timestamp field having proper format
   # timestamp = feature['properties']['timestamp']
   # feature['properties']['timestamp'] = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
+  
+  for prop in feature['properties'].keys():
+    if "." in prop:
+      feature['properties'][prop.replace(".", "_")] = feature['properties'].pop(prop)  
 
   # append to bulk insert list
   bulk.insert(feature)
